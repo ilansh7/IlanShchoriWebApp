@@ -61,32 +61,39 @@ namespace IlanShchoriWebApp.Services
         {
             throw new NotImplementedException();
         }
-        public double Operation(string operation, double num1, double num2)
+        delegate double operation(double num1, double num2);
+        public double Operation(string oper, double num1, double num2)
         {
             //throw new NotImplementedException();
             double res = 0;
-            switch (operation)
+            switch (oper)
             {
                 case "Add":
-                    res = Add(num1, num2);
+                    operation opAdd = new operation(Add);
+                    res = opAdd(num1, num2);
                     break;
                 case "Sub":
-                    res = Sub(num1, num2);
+                    operation opSub = new operation(Sub);
+                    res = opSub(num1, num2);
                     break;
                 case "Mul":
-                    res = Mul(num1, num2);
+                    operation opMul = new operation(Mul);
+                    res = opMul(num1, num2);
                     break;
                 case "Div":
-                    res = Div(num1, num2);
+                    operation opDiv = new operation(Div);
+                    res = opDiv(num1, num2);
                     break;
                 case "CustomOper1":
-                    res = CustomOper1(num1, num2);
+                    operation opCust1 = new operation(CustomOper1);
+                    res = opCust1(num1, num2);
                     break;
                 default:
                     break;
             }
             return res;
         }
+
         #endregion intreface
         public Dictionary<int, string> GetOperationsList()
         {
