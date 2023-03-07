@@ -1,7 +1,7 @@
 # IlanShchoriWebApp
 Simple Calculator (with DB SP's)
 
-This is simple calculator. 
+This is simple calculator (uses interface).
 
 To use : provide two number and pick an operation from DDL operation provided.
 
