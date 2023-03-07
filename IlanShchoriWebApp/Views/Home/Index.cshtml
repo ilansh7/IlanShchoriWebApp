@@ -99,7 +99,7 @@
 
 @if (Model != null)
 {
-    <p style="background-color:yellow">שלשה פעולות אחרונות</p>
+    <p style="background-color:yellow"> פעולות אחרונות @ViewBag.HistortDepth</p>
     <table class="table table-striped w-auto" style="display:block">
         <thead class="thead-dark">
             <tr>
@@ -108,7 +108,13 @@
                     Id
                 </th>
                 <th>
-                    Query
+                    Operation
+                </th>
+                <th>
+                    Input1
+                </th>
+                <th>
+                    Input2
                 </th>
                 <th>
                     Result
@@ -124,7 +130,11 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Query)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Operation)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Input1)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Input2)</td>
+                    @*<td>@Html.DisplayFor(modelItem => item.Input3)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Query)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.Result)</td>
                     <td>@Html.DisplayFor(modelItem => item.Timestamp)</td>
                 </tr>
@@ -137,7 +147,7 @@
     </div>
     <br />
     <div>
-        <p style="background-color:lightblue">ממוצעים : @ViewBag.OperationCurrMonth</p>
+        <p style="background-color:lightblue">ממוצעים (מתחילת החודש הנוכחי): @ViewBag.Operation</p>
         <table class="table table-striped w-auto" style="display:block">
             <thead class="thead-dark">
                 <tr>

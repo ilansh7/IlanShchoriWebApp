@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Reflection;
 
 namespace IlanShchoriWebApp.Services
 {
@@ -26,6 +28,7 @@ namespace IlanShchoriWebApp.Services
                 }
             }
         }
+
         #endregion propertirs
         #region c'tor
         public DbServices()
@@ -50,9 +53,39 @@ namespace IlanShchoriWebApp.Services
         {
             return num1 / num2;
         }
-        public double CustomOperation1(double num1, double num2)
+        public double CustomOper1(double num1, double num2)
         {
             return Math.Pow(num1, num2);
+        }
+        public double CustomOper2(double num1, double num2)
+        {
+            throw new NotImplementedException();
+        }
+        public double Operation(string operation, double num1, double num2)
+        {
+            //throw new NotImplementedException();
+            double res = 0;
+            switch (operation)
+            {
+                case "Add":
+                    res = Add(num1, num2);
+                    break;
+                case "Sub":
+                    res = Sub(num1, num2);
+                    break;
+                case "Mul":
+                    res = Mul(num1, num2);
+                    break;
+                case "Div":
+                    res = Div(num1, num2);
+                    break;
+                case "CustomOper1":
+                    res = CustomOper1(num1, num2);
+                    break;
+                default:
+                    break;
+            }
+            return res;
         }
         #endregion intreface
         public Dictionary<int, string> GetOperationsList()
@@ -62,7 +95,16 @@ namespace IlanShchoriWebApp.Services
 
             try
             {
-                Dictionary<int, string> list = Data.GetOperationsList();
+                //Dictionary<int, string> list = Data.GetOperationsList();
+                Dictionary<int, string> list = new Dictionary<int, string>();
+                //var lista = GetMethods(Type.GetType("Interface"));
+                var lista = typeof(ICalc<double>).GetMethods(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                int idx = 0;
+                list.Add(idx++, String.Empty);
+                foreach (var item in lista)
+                {
+                    list.Add(idx++, item.Name);
+                }
                 //Common.Logger.Logging(Common.LoggingMode.Debug, "Exit {controller}\\{methode}", _controllereName, _methodeName);
                 return list;
             }
@@ -128,6 +170,6 @@ namespace IlanShchoriWebApp.Services
             }
         }
 
-
+        
     }
 }

@@ -77,7 +77,9 @@ namespace IlanShchoriWebApp.Data
 
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add(new SqlParameter("@query", model.Query));
+                        cmd.Parameters.Add(new SqlParameter("@operation", model.Operation));
+                        cmd.Parameters.Add(new SqlParameter("@input1", model.Input01));
+                        cmd.Parameters.Add(new SqlParameter("@input2", model.Input02));
                         cmd.Parameters.Add(new SqlParameter("@result", model.Result));
 
                         ret = cmd.ExecuteNonQuery();

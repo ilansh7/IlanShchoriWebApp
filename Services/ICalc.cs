@@ -9,5 +9,7 @@ namespace IlanShchoriWebApp.Services
         T Sub(T a, T b);
         T Mul(T a, T b);
         T Div(T a, T b);
+        T CustomOper1(T a, T b);
+        T CustomOper2(T a, T b);
     }
 }

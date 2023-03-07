@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace IlanShchoriWebApp
 {
@@ -21,6 +22,7 @@ namespace IlanShchoriWebApp
             Mul = 3,
             Div = 4,
         }
+        private int _histDepth = 10;
         #endregion variables
         #region propertirs
         public Services.DbServices service
@@ -36,6 +38,10 @@ namespace IlanShchoriWebApp
                     return _srv;
                 }
             }
+        }
+        public int HistortDepth
+        {
+            get { return _histDepth; }
         }
         #endregion propertirs
         #region c'tor
@@ -56,29 +62,12 @@ namespace IlanShchoriWebApp
         [HttpPost]
         public ActionResult Index(GayaModel model)
         {
-            switch (model.Operation)
-            {
-                case "1":
-                    model.Result = service.Add(model.Input01, model.Input02);
-                    break;
-                case "2":
-                    model.Result = service.Sub(model.Input01, model.Input02);
-                    break;
-                case "3":
-                    model.Result = service.Mul(model.Input01,model.Input02);
-                    break;
-                case "4":
-                    model.Result = service.Div(model.Input01,model.Input02);
-                    break;
-                case "5":
-                    model.Result = service.CustomOperation1(model.Input01, model.Input02);
-                    break;
-                default:
-                    break;
-            }
             Dictionary<int, string> Operations = service.GetOperationsList();
             ViewBag.Operations = Operations;
-            if (!string.IsNullOrEmpty(model.Operation))
+            ViewBag.Operation = Operations[int.Parse(model.Operation)];
+            ViewBag.HistortDepth = HistortDepth;
+            model.Result = service.Operation(Operations[int.Parse(model.Operation)], model.Input01, model.Input02);
+            if (int.Parse(model.Operation) > 0)
             {
                 Entities.Gaya gaya = new Entities.Gaya();
                 gaya.Id = model.Id;
@@ -87,15 +76,22 @@ namespace IlanShchoriWebApp
                 {
                     gaya.Result = double.MaxValue;    
                 }
-                gaya.Query = String.Concat(model.Input01.ToString(), " ", Operations[int.Parse(model.Operation)], " ", model.Input02.ToString());
+                //gaya.Query = String.Concat(model.Input01.ToString(), " ", Operations[int.Parse(model.Operation)], " ", model.Input02.ToString());
+                gaya.Operation = Operations[int.Parse(model.Operation)];
+                gaya.Input01 = model.Input01;
+                gaya.Input02 = model.Input02;
                 int ret = service.WriteHistory(gaya, false);
 
-                DataTable dt = service.GetHistoryByOperation(3, Operations[int.Parse(model.Operation)]);
+                DataTable dt = service.GetHistoryByOperation(HistortDepth, Operations[int.Parse(model.Operation)]);
                 model.History = (from rw in dt.AsEnumerable()
                                      select new GayaHistory()
                                      {
                                          Id = Convert.ToInt32(rw["Id"]),
-                                         Query = Convert.ToString(rw["Query"]),
+                                         Operation = Convert.ToString(rw["Operation"]),
+                                         Input1 = Convert.ToDouble(rw["Input1"]),
+                                         Input2 = Convert.ToDouble(rw["Input2"]),
+                                         //Input3 = Convert.ToDouble(rw["Input3"]),
+                                         //Query = Convert.ToString(rw["Query"]),
                                          Result = Convert.ToDouble(rw["Result"]),
                                          Timestamp = Convert.ToDateTime(rw["Timestamp"])
                                      }).ToList();
