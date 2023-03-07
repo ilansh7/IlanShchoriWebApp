@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace IlanShchoriWebApp.Services
 {
-    public class DbServices
+    public class DbServices : ICalc<double>
     {
         #region variables
         private static Data.DbData _data;
@@ -32,7 +33,28 @@ namespace IlanShchoriWebApp.Services
             _data = new Data.DbData();
         }
         #endregion c'tor
-
+        #region intreface
+        public double Add(double num1, double num2)
+        {
+            return num1 + num2;
+        }
+        public double Sub(double num1, double num2)
+        {
+            return num1 - num2;
+        }
+        public double Mul(double num1, double num2)
+        {
+            return num1 * num2;
+        }
+        public double Div(double num1, double num2)
+        {
+            return num1 / num2;
+        }
+        public double CustomOperation1(double num1, double num2)
+        {
+            return Math.Pow(num1, num2);
+        }
+        #endregion intreface
         public Dictionary<int, string> GetOperationsList()
         {
             _methodeName = "GetOperationsList";

@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 
 namespace IlanShchoriWebApp
 {
@@ -61,19 +59,19 @@ namespace IlanShchoriWebApp
             switch (model.Operation)
             {
                 case "1":
-                    model.Result = model.Input01 + model.Input02;
+                    model.Result = service.Add(model.Input01, model.Input02);
                     break;
                 case "2":
-                    model.Result = model.Input01 - model.Input02;
+                    model.Result = service.Sub(model.Input01, model.Input02);
                     break;
                 case "3":
-                    model.Result = model.Input01 * model.Input02;
+                    model.Result = service.Mul(model.Input01,model.Input02);
                     break;
                 case "4":
-                    model.Result = model.Input01 / model.Input02;
+                    model.Result = service.Div(model.Input01,model.Input02);
                     break;
                 case "5":
-                    model.Result = Math.Pow(model.Input01, model.Input02);
+                    model.Result = service.CustomOperation1(model.Input01, model.Input02);
                     break;
                 default:
                     break;
@@ -120,7 +118,8 @@ namespace IlanShchoriWebApp
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "אילן שחורי";
+            ViewBag.Title = "";
 
             return View();
         }
