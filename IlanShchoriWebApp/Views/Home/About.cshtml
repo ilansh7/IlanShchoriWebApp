@@ -1,7 +1,14 @@
-﻿@{
+﻿@*@{
     ViewBag.Title = "About";
-}
-<h2>@ViewBag.Title.</h2>
+}*@
+<h2>@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<p>
+    <h4>Simple Calculator (with DB SP's)</h4><br />
+    This is simple calculator (uses interface).<br />
+    To use : provide two number and pick an operation from DDL operation provided.
+    calculate button also provide history and summary about the peration requested.<br />
+    DB script is located in the root (Gaya.sql) - this is manadatory.<br /><br />
+    <strong>Note : </strong>change the connection string (located in web.config) according to your SQL machine url.
+</p>

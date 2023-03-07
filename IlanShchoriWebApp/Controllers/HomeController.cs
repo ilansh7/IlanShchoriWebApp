@@ -111,7 +111,7 @@ namespace IlanShchoriWebApp
         }
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "About Calculator";
 
             return View();
         }
